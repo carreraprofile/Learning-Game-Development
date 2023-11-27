@@ -1,0 +1,216 @@
+#include "raylib.h"
+
+int main()
+{
+
+//window dimensions
+int windowwidth {800};
+int windowheight {450};
+    InitWindow(windowwidth, windowheight, "Axe Game Project");
+
+// circle coordinates
+int circle_x {50};
+int circle_y (225);
+int circle_rad {25};
+
+//circle edges
+int left_circle_x {circle_x - circle_rad};
+int right_circle_x {circle_x + circle_rad};
+int upper_circle_y {circle_y - circle_rad};
+int bottom_circle_y {circle_y + circle_rad};
+
+//goal coordinates
+int goal_x {775};
+int goal_y {225};
+int goal_length {25};
+
+//goal edges - touch to win
+int left_goal_x {goal_x};
+int right_goal_x {goal_x + goal_length};
+int upper_goal_y {goal_y};
+int bottom_goal_y {goal_y + goal_length};
+
+// axe coordinates
+int axe_x{400};
+int axe_y{0};
+int axe_direction{10};
+int axe_length {50};
+
+// axe2 coordinates
+int axe2_x{600};
+int axe2_y{350};
+int axe2_direction{10};
+int axe2_length {50};
+
+// axe3 coordinates
+int axe3_x{200};
+int axe3_y{150};
+int axe3_direction{10};
+int axe3_length {50};
+
+// axe edges
+int left_axe_x {axe_x};
+int right_axe_x {axe_x + axe_length};
+int upper_axe_y {axe_y};
+int bottom_axe_y {axe_y + axe_length};
+
+// axe2 edges
+int left_axe2_x {axe2_x};
+int right_axe2_x {axe2_x + axe2_length};
+int upper_axe2_y {axe2_y};
+int bottom_axe2_y {axe2_y + axe2_length};
+
+// axe3 edges
+int left_axe3_x {axe3_x};
+int right_axe3_x {axe3_x + axe3_length};
+int upper_axe3_y {axe3_y};
+int bottom_axe3_y {axe3_y + axe3_length};
+
+bool collision_with_axe = 
+            (left_axe_x <= right_circle_x) && 
+            (right_axe_x >= left_circle_x) && 
+            (upper_axe_y <= bottom_circle_y) && 
+            (bottom_axe_y >= upper_circle_y);
+            
+bool collision_with_axe2 = 
+            (left_axe2_x <= right_circle_x) && 
+            (right_axe2_x >= left_circle_x) && 
+            (upper_axe2_y <= bottom_circle_y) && 
+            (bottom_axe2_y >= upper_circle_y);
+bool collision_with_axe3 = 
+            (left_axe3_x <= right_circle_x) && 
+            (right_axe3_x >= left_circle_x) && 
+            (upper_axe3_y <= bottom_circle_y) && 
+            (bottom_axe3_y >= upper_circle_y);
+
+bool collision_with_goal = 
+            (left_goal_x <= right_circle_x) && 
+            (right_goal_x >= left_circle_x) && 
+            (upper_goal_y <= bottom_circle_y) && 
+            (bottom_axe3_y >= upper_circle_y);
+
+SetTargetFPS(60);
+
+while (WindowShouldClose() != true)
+{
+  
+  BeginDrawing();
+  ClearBackground(WHITE);
+
+if (collision_with_axe)
+{
+    DrawText("YOU DIED", 350, 200, 20, RED);
+}
+
+else if (collision_with_axe2)
+{
+    DrawText("YOU DIED", 350, 200, 20, RED);
+}
+
+else if (collision_with_axe3)
+{
+  DrawText("YOU DIED", 350, 200, 20, RED);
+}
+
+else if (collision_with_goal)
+{
+  DrawText("YOU WIN!", 350, 200, 20, GREEN);
+}
+
+else
+{
+  // game logic starts here 
+
+  //updating the edges
+  left_circle_x = circle_x - circle_rad;
+  right_circle_x = circle_x + circle_rad;
+  upper_circle_y = circle_y - circle_rad;
+  bottom_circle_y = circle_y + circle_rad;
+  left_axe_x = axe_x;
+  right_axe_x = axe_x + axe_length;
+  upper_axe_y = axe_y;
+  bottom_axe_y= axe_y + axe_length;
+  left_axe2_x = axe2_x;
+  right_axe2_x = axe2_x + axe2_length;
+  upper_axe2_y = axe2_y;
+  bottom_axe2_y= axe2_y + axe2_length;
+  left_axe3_x = axe3_x;
+  right_axe3_x = axe3_x + axe3_length;
+  upper_axe3_y = axe3_y;
+  bottom_axe3_y= axe3_y + axe3_length;
+  // update collision with axes
+  collision_with_axe = 
+            (left_axe_x <= right_circle_x) && 
+            (right_axe_x >= left_circle_x) && 
+            (upper_axe_y <= bottom_circle_y) && 
+            (bottom_axe_y >= upper_circle_y);
+
+  collision_with_axe2 = 
+            (left_axe2_x <= right_circle_x) && 
+            (right_axe2_x >= left_circle_x) && 
+            (upper_axe2_y <= bottom_circle_y) && 
+            (bottom_axe2_y >= upper_circle_y);
+
+    collision_with_axe3 = 
+            (left_axe3_x <= right_circle_x) && 
+            (right_axe3_x >= left_circle_x) && 
+            (upper_axe3_y <= bottom_circle_y) && 
+            (bottom_axe3_y >= upper_circle_y);
+
+  // update collision with goal
+
+   collision_with_goal = 
+            (left_goal_x <= right_circle_x) && 
+            (right_goal_x >= left_circle_x) && 
+            (upper_goal_y <= bottom_circle_y) && 
+            (bottom_goal_y >= upper_circle_y);
+
+  DrawCircle(circle_x,circle_y,circle_rad,PURPLE);
+  DrawRectangle(axe_x, axe_y, axe_length, axe_length, RED);
+  DrawRectangle(axe2_x, axe2_y, axe2_length, axe2_length, RED); 
+  DrawRectangle(axe3_x, axe3_y, axe3_length, axe3_length, RED);
+  DrawRectangle(goal_x, goal_y, goal_length, goal_length, YELLOW);    
+
+  // moving the axes
+   axe_y += axe_direction;
+   if (axe_y > windowheight || axe_y < 0)
+   {
+    axe_direction = -axe_direction;
+   }
+    axe2_y += axe2_direction;
+   if (axe2_y > windowheight || axe2_y < 0)
+   {
+    axe2_direction = -axe2_direction;
+   }
+   axe3_y += axe3_direction;
+   if (axe3_y > windowheight || axe3_y < 0)
+   {
+    axe3_direction = -axe3_direction;
+   }
+
+  // moving the ball 
+    if (IsKeyDown(KEY_D) && circle_x < windowwidth)
+  {
+    circle_x += 10;  
+  }
+    if (IsKeyDown(KEY_A) && circle_x > 0)
+  {
+    circle_x -= 10;
+  }
+ 
+      if (IsKeyDown(KEY_S) && circle_y < 450)
+ {
+    circle_y += 10;
+ }  
+    if (IsKeyDown(KEY_W) && circle_y > 0 )
+  {
+    circle_y -= 10;
+  }
+
+  // game logic ends here
+}
+  EndDrawing();
+
+}
+CloseWindow ();
+}
